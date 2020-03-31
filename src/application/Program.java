@@ -1,29 +1,42 @@
 package application;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.File;
+import java.util.Scanner;
 
 public class Program {
 
 	public static void main(String[] args) {
 
-		String [] lines = new String[] {"Good mornig", "Good afternoon", "Good night"};
+		Scanner sc = new Scanner(System.in);
 		
+		System.out.println("Enter a folder path: ");
+		String strPath = sc.nextLine();
 		
-		String path = "c:\\pp temp\\out.txt";
+		File path = new File(strPath);
 		
-		try (BufferedWriter bw = new BufferedWriter(new FileWriter(path))){
-			
-				for (String line : lines) {
-					bw.write(line);
-					bw.newLine();
-				}
+		//imprimir as pastas no dado caminho "X"
+		File[] folders = path.listFiles(File::isDirectory);
+		System.out.println("FOLDERS: ");
+		
+		for (File folder : folders) {
+			System.out.println(folder);
 		}
-		catch (IOException e) {
-			e.printStackTrace();
+		
+		//imprimir os arquivos no dado caminho "X"
+		
+		File [] files = path.listFiles(File::isFile);
+		System.out.println("FILES: ");
+		for (File file : files) {
+			System.out.println(file);
 		}
 		
+		//criar uma subpasta
+		boolean success = new File(strPath + "\\subdir").mkdir();
+		System.out.println("Directory created com successfully: " + success);
 		
+		
+		
+		
+		sc.close();
 	}
 }
